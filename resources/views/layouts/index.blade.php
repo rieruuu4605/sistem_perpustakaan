@@ -54,7 +54,6 @@
     @include('components.loading-sidebar')
 
     <script src="{{ asset('js/script.js') }}"></script>
-
 </body>
 
 </html>

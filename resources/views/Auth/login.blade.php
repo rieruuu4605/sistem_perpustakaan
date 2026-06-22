@@ -111,6 +111,9 @@
                             <span class="">Tidak Memiliki Akun? <a href="/register"
                                     class="text-[#35094D] font-semibold">Daftar Sekarang</a></span>
                         </div>
+                        <div class="flex justify-center mt-4">
+                            <span class="">Pengunjung? <a href="{{ url('/buku-tamu') }}" class="text-[#35094D] font-semibold">Buku Tamu</a></span>
+                        </div>
                     </form>
                 </div>
             </div>

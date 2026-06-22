@@ -17,6 +17,7 @@ use App\Http\Middleware\is_pengguna_and_kepala_perpus;
 use App\Http\Middleware\isAnggota;
 use App\Http\Middleware\isKepalaPerpus;
 use App\Http\Middleware\isPetugas;
+use App\Http\Controllers\PengunjungController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -101,7 +102,7 @@ Route::middleware(isPetugas::class)->group(function () {
     Route::get('/profile-petugas', [ProfileController::class, 'profile_petugas']);
     Route::put('/profile-petugas', [ProfileController::class, 'profile_update']);
     // End Profile Petugas
-    
+
 });
 
 // Kepala Perpustakaan Routes
@@ -129,7 +130,7 @@ Route::middleware(isKepalaPerpus::class)->group(function () {
     // Approve dan rejected Laporan
     Route::post('/approve/laporan/{id}',[LaporanController::class, 'approveLaporan']);
     Route::post('/reject/laporan/{id}',[LaporanController::class, 'rejectLaporan']);
-    
+
     // Kelola Pengguna
     Route::get('/daftar-pengguna', [KelolaPenggunaController::class, 'daftar_pengguna']);
     Route::delete('/daftar-pengguna/{user:id}', [KelolaPenggunaController::class, 'delete_pengguna']);
@@ -158,3 +159,7 @@ Route::middleware(is_pengguna_and_kepala_perpus::class)->group(function () {
     Route::put('/kelola-buku/{buku:id}', [BukuController::class, 'update_buku']);
     Route::delete('/kelola-buku/{buku:id}', [BukuController::class, 'delete_buku']);
 });
+
+Route::view('/buku-tamu', 'pengunjung.buku_tamu')->name('buku.tamu');
+Route::get('/form-buku-tamu', [PengunjungController::class, 'showForm']);
+Route::post('/simpan-kunjungan', [PengunjungController::class, 'store']);
