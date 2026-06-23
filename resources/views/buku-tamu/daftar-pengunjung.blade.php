@@ -3,10 +3,22 @@
 @section('halaman', 'Daftar Pengunjung')
 
 @section('main')
+
 <section class="mt-20">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-[#35094D]">Daftar Pengunjung Hari Ini</h2>
-        <span class="text-gray-500">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</span>
+        <h2 class="text-2xl font-bold text-[#35094D]">Daftar Pengunjung</h2>
+        
+        {{-- Form Filter Tanggal --}}
+        <form action="/daftar-pengunjung" method="GET" class="flex items-center gap-3">
+            <input type="date" name="tanggal" value="{{ $tanggal }}"
+                class="bg-white px-4 py-2 rounded-lg border border-gray-200 text-[#35094D] focus:outline-none focus:border-[#35094D]">
+            
+            <button type="submit" class="bg-[#35094D] text-white px-6 py-2 rounded-lg hover:bg-[#2a073a] transition">
+                Filter
+            </button>
+            
+            <a href="/daftar-pengunjung" class="text-gray-500 hover:text-[#35094D] underline text-sm">Reset</a>
+        </form>
     </div>
 
     <div class="bg-white w-full rounded-xl mt-4 p-6 shadow-sm">
@@ -22,7 +34,7 @@
             </thead>
             <tbody class="text-[#35094D]">
                 @forelse ($pengunjung as $tamu)
-                <tr class="border-b border-gray-200">
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="py-4 text-center">{{ $tamu->nama }}</td>
                     <td class="py-4 text-center">{{ $tamu->npm }}</td>
                     <td class="py-4 text-center">{{ $tamu->tujuan }}</td>
@@ -33,7 +45,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-10 text-gray-400 italic">Belum ada pengunjung hari ini.</td>
+                    <td colspan="5" class="text-center py-10 text-gray-400 italic">Belum ada pengunjung pada tanggal {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}.</td>
                 </tr>
                 @endforelse
             </tbody>
