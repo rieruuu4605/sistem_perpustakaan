@@ -13,39 +13,26 @@ use Illuminate\Support\Facades\Storage;
 class KelolaPenggunaController extends Controller
 {
     
-    // Daftar Pengguna Index
     public function daftar_pengguna(Request $request)
     {
-        // Searcing
         $cari = $request->input('cari');
+        $query = User::query();
 
-        // Ambil Data User Berdasarkan Pencarian di Kolom Username, Email, Nama Lengkap, Nomer Induk
-        $users = User::where(function ($query) use ($cari) {
-
-        // Pencarian di Kolom Username, Email
-            $query->where('username', 'like', "%{$cari}%")
-                ->orWhere('email', 'like', "%{$cari}%")
-                // Anggota
-                ->orWhereHas('anggota', function ($q) use ($cari) {
-                    $q->where('nama_lengkap', 'like', "%{$cari}%")
-                        ->orWhere('nomer_induk', 'like', "%{$cari}%");
-                })
-                // Petugas
-                ->orWhereHas('petugas', function ($q) use ($cari) {
-                    $q->where('nama_lengkap', 'like', "%{$cari}%")
-                        ->orWhere('nomer_induk', 'like', "%{$cari}%");
-                })
-                // Kpala Perpus
-                ->orWhereHas('KepalaPerpus', function ($q) use ($cari) {
-                    $q->where('nama_lengkap', 'like', "%{$cari}%")
-                        ->orWhere('nomer_induk', 'like', "%{$cari}%");
-                });
-        })->paginate(5)
-            // Paginasi
-            ->withQueryString();
+        // Logika Pencarian
+        if ($cari) {
+            $query->where(function ($q) use ($cari) {
+                $q->where('username', 'like', "%{$cari}%")
+                  ->orWhere('email', 'like', "%{$cari}%")
+                  ->orWhereHas('anggota', fn($s) => $s->where('nama_lengkap', 'like', "%{$cari}%")->orWhere('nomer_induk', 'like', "%{$cari}%"))
+                  ->orWhereHas('petugas', fn($s) => $s->where('nama_lengkap', 'like', "%{$cari}%")->orWhere('nomer_induk', 'like', "%{$cari}%"))
+                  ->orWhereHas('KepalaPerpus', fn($s) => $s->where('nama_lengkap', 'like', "%{$cari}%")->orWhere('nomer_induk', 'like', "%{$cari}%"));
+            });
+        }
 
         return view('Kepala_perpus.daftar-pengguna', [
-            "Users"    =>    $users
+            "admins"   => (clone $query)->where('role', 'kepala_perpus')->get(),
+            "petugas"  => (clone $query)->where('role', 'petugas')->get(),
+            "anggotas" => (clone $query)->where('role', 'anggota')->get()
         ]);
     }
 
