@@ -73,6 +73,8 @@ Route::middleware(isPetugas::class)->group(function () {
     // Dashboard Petugas
     Route::get('/dashboard-petugas', [PetugasController::class, 'Dashboard_petugas']);
     // End Dashboard Petugas
+    // Tambahkan route ini
+Route::get('/daftar-pengunjung', [PengunjungController::class, 'indexDaftar']);
 
     // Pengajuan & pengembalian & pembayaran
     Route::get('/pengajuan',[PetugasController::class, 'pengajuan']);
@@ -114,6 +116,9 @@ Route::middleware(isKepalaPerpus::class)->group(function () {
     // Kelola Daftar Transaksi
     Route::get('/daftar-transaksi', [KepalaPerpusController::class, 'daftar_transaksi']);
     // End Kelola Daftar Transaksi
+
+    // Tambahkan route ini
+Route::get('/daftar-pengunjung', [PengunjungController::class, 'indexDaftar']);
 
     // Daftar Laporan
     Route::get('/daftar-laporan', [LaporanController::class, 'daftarLaporanKepalaPerpus']);

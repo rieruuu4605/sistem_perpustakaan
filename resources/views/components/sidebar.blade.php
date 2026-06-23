@@ -31,7 +31,6 @@
             <ul class="mt-2 space-y-4">
                 {{-- Dashboard Anggota --}}
                 @role('anggota')
-                    {{-- Dashboard Anggota --}}
                     <li>
                         <a href="/dashboard-anggota"
                             class="{{ request()->is('dashboard-anggota*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -42,7 +41,6 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    {{-- Daftar Buku --}}
                     <li>
                         <a href="/daftar-buku"
                             class="{{ request()->is('daftar-buku*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -71,7 +69,6 @@
 
                 {{-- Dashboard Kepala Perpustakaan --}}
                 @role('kepala_perpus')
-                    {{-- dashboard kepala --}}
                     <li>
                         <a href="/dashboard-kepala-perpustakaan"
                             class="{{ request()->is('dashboard-kepala-perpustakaan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -84,7 +81,6 @@
                     </li>
 
                     <span class="text-[10px] font-medium text-[#35094d90] ">TRANSAKSI</span>
-                    {{-- Daftar Transaksi --}}
                     <li class="mt-2">
                         <a href="/daftar-transaksi"
                             class="{{ request()->is('daftar-transaksi*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -95,7 +91,6 @@
                             <span>Transaksi</span>
                         </a>
                     </li>
-                    {{-- Daftar Laporan --}}
                     <li>
                         <a href="/daftar-laporan"
                             class="{{ request()->is('daftar-laporan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -107,12 +102,15 @@
                         </a>
                     </li>
                 @endrole
+            </ul>
+        </div>
 
-                {{-- Fitur Petugas --}}
-                @role('petugas')
-                    <span class="text-[10px] font-medium text-[#35094d90]">PENGAJUAN</span>
-                    {{-- Pengajuan --}}
-                    <li class="mt-2">
+        {{-- Fitur Petugas --}}
+        @role('petugas')
+            <div class="mb-5">
+                <span class="text-[10px] font-medium text-[#35094d90]">PENGAJUAN</span>
+                <ul class="mt-2 space-y-4">
+                    <li>
                         <a href="/pengajuan"
                             class="{{ request()->is('pengajuan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
                             <div class="w-6 h-6 flex items-center justify-center">
@@ -122,7 +120,6 @@
                             <span>Pengajuan</span>
                         </a>
                     </li>
-                    {{-- Pengembalian --}}
                     <li>
                         <a href="/pengembalian"
                             class="{{ request()->is('pengembalian*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -133,7 +130,6 @@
                             <span>Pengembalian</span>
                         </a>
                     </li>
-                    {{-- Pembayaran - Petugas --}}
                     <li>
                         <a href="/pembayaran"
                             class="{{ request()->is('pembayaran*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -145,7 +141,6 @@
                         </a>
                     </li>
                     <span class="text-[10px] font-medium text-[#35094d90]">DATA BUKU</span>
-                    {{-- Kelola Buku --}}
                     <li class="mt-2">
                         <a href="/kelola-buku"
                             class="{{ request()->is('kelola-buku*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
@@ -156,39 +151,34 @@
                             <span>Daftar Buku</span>
                         </a>
                     </li>
-                @endrole
-            </ul>
-        </div>
+                </ul>
+            </div>
+        @endrole
 
         @role('anggota')
-            {{-- TRANSAKSI --}}
             <div class="mb-5">
                 <span class="text-[10px] font-medium text-[#35094d90] ">TRANSAKSI</span>
                 <ul class="mt-2 space-y-4">
-                    @role('anggota')
-                        {{-- Riwayat Peminjaman --}}
-                        <li>
-                            <a href="/riwayat-pinjaman"
-                                class="{{ request()->is('riwayat-pinjaman') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                <div class="w-6 h-6 flex items-center justify-center">
-                                    <img src="{{ request()->is('riwayat-pinjaman') ? asset('icons/svg/riwayat-pinjaman-aktif.svg') : asset('icons/svg/riwayat-pinjaman-inactive.svg') }}"
-                                        class="w-7 h-7 object-contain" alt="">
-                                </div>
-                                <span>Riwayat Peminjaman</span>
-                            </a>
-                        </li>
-                        {{-- Denda Anggota --}}
-                        <li>
-                            <a href="/denda-anggota"
-                                class="{{ request()->is('denda-anggota*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                <div class="w-6 h-6 flex items-center justify-center">
-                                    <img src="{{ request()->is('denda-anggota*') ? asset('icons/svg/payment-aktif.svg') : asset('icons/svg/payment-inaktif.svg') }}"
-                                        class="w-5 h-5 object-contain" alt="">
-                                </div>
-                                <span>Denda Saya</span>
-                            </a>
-                        </li>
-                    @endrole
+                    <li>
+                        <a href="/riwayat-pinjaman"
+                            class="{{ request()->is('riwayat-pinjaman') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('riwayat-pinjaman') ? asset('icons/svg/riwayat-pinjaman-aktif.svg') : asset('icons/svg/riwayat-pinjaman-inactive.svg') }}"
+                                    class="w-7 h-7 object-contain" alt="">
+                            </div>
+                            <span>Riwayat Peminjaman</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/denda-anggota"
+                            class="{{ request()->is('denda-anggota*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('denda-anggota*') ? asset('icons/svg/payment-aktif.svg') : asset('icons/svg/payment-inaktif.svg') }}"
+                                    class="w-5 h-5 object-contain" alt="">
+                            </div>
+                            <span>Denda Saya</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         @endrole
@@ -208,192 +198,196 @@
                             <span>Pengaturan</span>
                         </a>
                     </li>
+                </ul>
+            </div>
+        @endrole
+
+        {{-- LAINNYA --}}
+        <div>
+            <span class="text-[10px] font-medium text-[#35094d90] ">LAINNYA</span>
+            <ul class="mt-2 space-y-4">
+                
+                {{-- MENU BUKU TAMU UNTUK ADMIN & PETUGAS --}}
+                @role('kepala_perpus', 'petugas')
+                <li>
+                    <a href="/daftar-pengunjung"
+                        class="{{ request()->is('daftar-pengunjung*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <img src="{{ request()->is('daftar-pengunjung*') ? asset('icons/svg/pengguna-aktif.svg') : asset('icons/svg/pengguna-inaktif.svg') }}"
+                                class="w-5 h-5 object-contain" alt="">
+                        </div>
+                        <span>Daftar Tamu</span>
+                    </a>
+                </li>
                 @endrole
 
-                {{-- LAINNYA --}}
-                <div>
-                    <span class="text-[10px] font-medium text-[#35094d90] ">LAINNYA</span>
-                    <ul class="mt-2 space-y-4">
-                        @role('kepala_perpus')
-                            {{-- Kelola Buku --}}
-                            <li>
-                                <a href="/kelola-buku"
-                                    class="{{ request()->is('kelola-buku*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('kelola-buku*') ? asset('icons/svg/buku-aktif.svg') : asset('icons/svg/buku-inactive.svg') }}"
-                                            class="w-5 h-5 object-contain" alt="">
-                                    </div>
-                                    <span>Daftar Buku</span>
-                                </a>
-                            </li>
-                            {{-- Daftar Pengguna --}}
-                            <li>
-                                <a href="/daftar-pengguna"
-                                    class="{{ request()->is('daftar-pengguna*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('daftar-pengguna*') ? asset('icons/svg/pengguna-aktif.svg') : asset('icons/svg/pengguna-inaktif.svg') }}"
-                                            class="w-5 h-5 object-contain" alt="">
-                                    </div>
-                                    <span>Daftar Pengguna</span>
-                                </a>
-                            </li>
+                @role('kepala_perpus')
+                    <li>
+                        <a href="/kelola-buku"
+                            class="{{ request()->is('kelola-buku*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('kelola-buku*') ? asset('icons/svg/buku-aktif.svg') : asset('icons/svg/buku-inactive.svg') }}"
+                                    class="w-5 h-5 object-contain" alt="">
+                            </div>
+                            <span>Daftar Buku</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/daftar-pengguna"
+                            class="{{ request()->is('daftar-pengguna*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('daftar-pengguna*') ? asset('icons/svg/pengguna-aktif.svg') : asset('icons/svg/pengguna-inaktif.svg') }}"
+                                    class="w-5 h-5 object-contain" alt="">
+                            </div>
+                            <span>Daftar Pengguna</span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
+                        <a href="/profile-kepala-perpus"
+                            class="{{ request()->is('profile-kepala-perpus*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('profile-kepala-perpus*') ? asset('icons/svg/profile-aktif.svg') : asset('icons/svg/profile-inactive.svg') }}"
+                                    class="w-6 h-6 object-contain" alt="">
+                            </div>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                @endrole
 
-                            {{-- Profile Kepala --}}
-                            <li class="mt-2">
-                                <a href="/profile-kepala-perpus"
-                                    class="{{ request()->is('profile-kepala-perpus*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('profile-kepala-perpus*') ? asset('icons/svg/profile-aktif.svg') : asset('icons/svg/profile-inactive.svg') }}"
-                                            class="w-6 h-6 object-contain" alt="">
-                                    </div>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                        @endrole
+                @role('petugas')
+                    <li>
+                        <a href="/aktivitas"
+                            class="{{ request()->is('aktivitas*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('aktivitas*') ? asset('icons/svg/activity-aktif.svg') : asset('icons/svg/aktifity-inaktif.svg') }}"
+                                    class="w-8 h-8 object-contain" alt="">
+                            </div>
+                            <span>Aktivitas Saya</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/laporan"
+                            class="{{ request()->is('laporan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('laporan*') ? asset('icons/svg/laporan-aktif.svg') : asset('icons/svg/laporan-inaktif.svg') }}"
+                                    class="w-5 h-5 object-contain" alt="">
+                            </div>
+                            <span>Laporan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/profile-petugas"
+                            class="{{ request()->is('profile-petugas*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('profile-petugas*') ? asset('icons/svg/profile-aktif.svg') : asset('icons/svg/profile-inactive.svg') }}"
+                                    class="w-6 h-6 object-contain" alt="">
+                            </div>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                @endrole
 
-                        @role('petugas')
-                            {{-- Aktivitas --}}
-                            <li>
-                                <a href="/aktivitas"
-                                    class="{{ request()->is('aktivitas*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('aktivitas*') ? asset('icons/svg/activity-aktif.svg') : asset('icons/svg/aktifity-inaktif.svg') }}"
-                                            class="w-8 h-8 object-contain" alt="">
-                                    </div>
-                                    <span>Aktivitas Saya</span>
-                                </a>
-                            </li>
-                            {{-- Laporan --}}
-                            <li>
-                                <a href="/laporan"
-                                    class="{{ request()->is('laporan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('laporan*') ? asset('icons/svg/laporan-aktif.svg') : asset('icons/svg/laporan-inaktif.svg') }}"
-                                            class="w-5 h-5 object-contain" alt="">
-                                    </div>
-                                    <span>Laporan</span>
-                                </a>
-                            </li>
-
-                            {{-- Profile Petugas --}}
-                            <li>
-                                <a href="/profile-petugas"
-                                    class="{{ request()->is('profile-petugas*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('profile-petugas*') ? asset('icons/svg/profile-aktif.svg') : asset('icons/svg/profile-inactive.svg') }}"
-                                            class="w-6 h-6 object-contain" alt="">
-                                    </div>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                        @endrole
-
-                        @role('anggota')
-                            {{-- Profile Anggota --}}
-                            <li>
-                                <a href="/profile-anggota"
-                                    class="{{ request()->is('profile-anggota*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('profile-aktif.svg') ? asset('icons/svg/profile-aktif.svg') : asset('icons/svg/profile-inactive.svg') }}"
-                                            class="w-6 h-6 object-contain" alt="">
-                                    </div>
-                                    <span>Profile</span>
-                                </a>
-                            </li>
-                            <li class="relative">
-                                {{-- Pemberitahuan --}}
-                                @php
-                                    $user = Auth::user();
-                                    // Ambil semua pemberitahuan
-                                    $pemberitahuan = $user->Anggota->pemberitahuan ?? collect();
-                                    // Hitung yang belum dilihat
-                                    $belumDilihat = $pemberitahuan->where('sudah_dilihat', false)->count();
-                                @endphp
-                                <a href="/pemberitahuan"
-                                    class="{{ request()->is('pemberitahuan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
-                                    <div class="w-6 h-6 flex items-center justify-center">
-                                        <img src="{{ request()->is('pemberitahuan*')
-                                            ? asset('icons/svg/lonceng-aktif.svg')
-                                            : asset('icons/svg/lonceng-inactive.svg') }}"
-                                            class="w-5 h-5 object-contain" alt="">
-                                    </div>
-                                    <span>Pemberitahuan</span>
-                                    @if ($belumDilihat > 0)
-                                        <span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
-                                            {{ $belumDilihat }}
-                                        </span>
-                                    @endif
-                                </a>
-                            </li>
-                        @endrole
-                    </ul>
-                </div>
+                @role('anggota')
+                    <li>
+                        <a href="/profile-anggota"
+                            class="{{ request()->is('profile-anggota*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('profile-aktif.svg') ? asset('icons/svg/profile-aktif.svg') : asset('icons/svg/profile-inactive.svg') }}"
+                                    class="w-6 h-6 object-contain" alt="">
+                            </div>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="relative">
+                        @php
+                            $user = Auth::user();
+                            $pemberitahuan = $user->Anggota->pemberitahuan ?? collect();
+                            $belumDilihat = $pemberitahuan->where('sudah_dilihat', false)->count();
+                        @endphp
+                        <a href="/pemberitahuan"
+                            class="{{ request()->is('pemberitahuan*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('pemberitahuan*')
+                                    ? asset('icons/svg/lonceng-aktif.svg')
+                                    : asset('icons/svg/lonceng-inactive.svg') }}"
+                                    class="w-5 h-5 object-contain" alt="">
+                            </div>
+                            <span>Pemberitahuan</span>
+                            @if ($belumDilihat > 0)
+                                <span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
+                                    {{ $belumDilihat }}
+                                </span>
+                            @endif
+                        </a>
+                    </li>
+                @endrole
+            </ul>
         </div>
+    </div>
 
-        {{-- Logout Button --}}
-        <div class="absolute bottom-8 left-10 right-10">
-            <button
-                class="btn_open_modal flex items-center justify-between bg-[#35094D] w-full rounded-2xl p-3 text-[16px] text-white cursor-pointer hover:bg-[#2a073d] transition-colors">
-                <img src="{{ asset('icons/svg/sign-out.svg') }}" class="w-5 h-5" alt="">
-                <span class="font-medium">Keluar</span>
-                <div class="w-5 h-5"></div>
-            </button>
-        </div>
+    {{-- Logout Button --}}
+    <div class="absolute bottom-8 left-10 right-10">
+        <button
+            class="btn_open_modal flex items-center justify-between bg-[#35094D] w-full rounded-2xl p-3 text-[16px] text-white cursor-pointer hover:bg-[#2a073d] transition-colors">
+            <img src="{{ asset('icons/svg/sign-out.svg') }}" class="w-5 h-5" alt="">
+            <span class="font-medium">Keluar</span>
+            <div class="w-5 h-5"></div>
+        </button>
+    </div>
 
-        {{-- Modal Logout --}}
-        <section
-            class="open_modal hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-            <div class="bg-white p-8 w-full max-w-md rounded-2xl shadow-xl">
-                <div class="flex flex-col items-center text-center gap-4">
-                    <img class="w-20" src="{{ asset('icons/svg/warning.svg') }}" alt="warning">
-                    <h3 class="text-[#35094D] font-bold text-xl">Yakin Ingin Keluar?</h3>
-                    <p class="text-gray-500 text-sm">Anda harus login kembali untuk mengakses data perpustakaan.</p>
-                </div>
-
-                <div class="flex justify-center gap-4 mt-8">
-                    <button
-                        class="btn_close border border-gray-300 text-[#35094D] px-8 py-2.5 rounded-full font-medium hover:bg-gray-50 transition-all">
-                        Nanti Saja
-                    </button>
-
-                    <form id="logout_form" action="/logout" method="POST">
-                        @csrf
-                        <button type="submit" id="btn_logout"
-                            class="bg-[#35094D] text-white px-8 py-2.5 rounded-full font-medium flex items-center justify-center gap-2 min-w-[140px] hover:bg-[#2a073d] transition-all">
-                            <span id="text_logout">Ya, Keluar</span>
-                            <svg id="spinner" class="hidden animate-spin h-5 w-5 text-white"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10"
-                                    stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                </path>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
+    {{-- Modal Logout --}}
+    <section class="open_modal hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+        <div class="bg-white p-8 w-full max-w-md rounded-2xl shadow-xl">
+            <div class="flex flex-col items-center text-center gap-4">
+                <img class="w-20" src="{{ asset('icons/svg/warning.svg') }}" alt="warning">
+                <h3 class="text-[#35094D] font-bold text-xl">Yakin Ingin Keluar?</h3>
+                <p class="text-gray-500 text-sm">Anda harus login kembali untuk mengakses data perpustakaan.</p>
             </div>
-        </section>
 
-        <script>
-            const openModalBtn = document.querySelector('.btn_open_modal');
-            const closeModalBtn = document.querySelector('.btn_close');
-            const modal = document.querySelector('.open_modal');
+            <div class="flex justify-center gap-4 mt-8">
+                <button
+                    class="btn_close border border-gray-300 text-[#35094D] px-8 py-2.5 rounded-full font-medium hover:bg-gray-50 transition-all">
+                    Nanti Saja
+                </button>
 
-            openModalBtn.addEventListener('click', () => modal.classList.remove('hidden'));
-            closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
+                <form id="logout_form" action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" id="btn_logout"
+                        class="bg-[#35094D] text-white px-8 py-2.5 rounded-full font-medium flex items-center justify-center gap-2 min-w-[140px] hover:bg-[#2a073d] transition-all">
+                        <span id="text_logout">Ya, Keluar</span>
+                        <svg id="spinner" class="hidden animate-spin h-5 w-5 text-white"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-            const logoutForm = document.getElementById('logout_form');
-            const btnLogout = document.getElementById('btn_logout');
-            const spinner = document.getElementById('spinner');
-            const textLogout = document.getElementById('text_logout');
+    <script>
+        const openModalBtn = document.querySelector('.btn_open_modal');
+        const closeModalBtn = document.querySelector('.btn_close');
+        const modal = document.querySelector('.open_modal');
 
-            logoutForm.addEventListener('submit', function() {
-                btnLogout.disabled = true;
-                btnLogout.classList.add('opacity-70', 'cursor-not-allowed');
-                closeModalBtn.classList.add('invisible');
-                spinner.classList.remove('hidden');
-                textLogout.innerText = 'Tunggu...';
-            });
-        </script>
+        openModalBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+        closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+        const logoutForm = document.getElementById('logout_form');
+        const btnLogout = document.getElementById('btn_logout');
+        const spinner = document.getElementById('spinner');
+        const textLogout = document.getElementById('text_logout');
+
+        logoutForm.addEventListener('submit', function() {
+            btnLogout.disabled = true;
+            btnLogout.classList.add('opacity-70', 'cursor-not-allowed');
+            closeModalBtn.classList.add('invisible');
+            spinner.classList.remove('hidden');
+            textLogout.innerText = 'Tunggu...';
+        });
+    </script>
 </section>

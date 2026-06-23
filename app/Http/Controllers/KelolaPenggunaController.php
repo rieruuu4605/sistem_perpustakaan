@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class KelolaPenggunaController extends Controller
 {
+    
     // Daftar Pengguna Index
     public function daftar_pengguna(Request $request)
     {

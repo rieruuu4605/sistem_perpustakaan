@@ -6,11 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PengunjungController extends Controller
+class PengunjungController extends Controller   
 {
     public function index()
     {
         return view('pengunjung.buku_tamu');
+    }
+
+    public function indexDaftar()
+    {
+        $pengunjung = \App\Models\BukuTamu::whereDate('created_at', \Carbon\Carbon::today())->get();
+        
+        return view('buku-tamu.daftar-pengunjung', compact('pengunjung'));
     }
 
     public function showForm()

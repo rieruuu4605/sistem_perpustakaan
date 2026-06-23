@@ -97,8 +97,8 @@
                         </div>
 
                         <div class="flex flex-col gap-2">
-                            <label class="text-sm font-medium text-slate-700">No Anggota / NPM *</label>
-                            <input type="text" name="npm" required placeholder="Contoh: 2021001234" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-700 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-sm">
+                            <label class="text-sm font-medium text-slate-700">NIK / NPM *</label>
+                            <input type="text" name="npm" required placeholder="Contoh: 3201xxxxxxxxxxxx (NIK) at   au 2021001234 (NPM)" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-700 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-sm">
                         </div>
 
                         <div class="flex flex-col gap-2">
