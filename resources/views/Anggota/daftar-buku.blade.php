@@ -7,15 +7,29 @@
     {{-- Header & Filter Cari --}}
     <section class="px-10 pt-20">
             <form action="/daftar-buku" method="GET" class="form-cari flex flex-col gap-4">
-                @csrf
-                <div class="relative w-full max-w-[600px]">
-                    <div class="absolute inset-y-0 left-4 flex items-center">
-                        <img src="{{ asset('icons/svg/Search.svg') }}" class="w-5 opacity-50" alt="">
-                    </div>
-                    <input name="cari" type="text" placeholder="Cari Judul Buku, Penulis..."
-                        class="bg-white w-full pl-12 pr-4 py-4 rounded-2xl outline-0 border border-gray-50" value="{{ request('cari') }}">
-                </div>
-            </form>
+    @csrf
+    <div class="flex flex-wrap gap-3 items-center">
+        <div class="relative w-full max-w-[600px]">
+            <div class="absolute inset-y-0 left-4 flex items-center">
+                <img src="{{ asset('icons/svg/Search.svg') }}" class="w-5 opacity-50" alt="">
+            </div>
+            <input name="cari" type="text" placeholder="Cari Judul Buku, Penulis..."
+                class="bg-white w-full pl-12 pr-4 py-4 rounded-2xl outline-0 border border-gray-50" value="{{ request('cari') }}">
+        </div>
+        <select name="kategori" onchange="this.form.submit()"
+            class="bg-white px-4 py-4 rounded-2xl outline-0 border border-gray-50 text-sm text-gray-600 cursor-pointer">
+            <option value="">Semua Kategori</option>
+            @foreach ($kategoris as $kat)
+                <option value="{{ $kat }}" {{ request('kategori') == $kat ? 'selected' : '' }}>
+                    {{ $kat }}
+                </option>
+            @endforeach
+        </select>
+        @if(request('kategori') || request('cari'))
+            <a href="/daftar-buku" class="text-sm text-gray-400 hover:text-[#35094D] underline">Reset</a>
+        @endif
+    </div>
+</form>
     </section>
 
     <section class="w-full bg-white mt-32 px-10 pb-20 min-h-[500px]">

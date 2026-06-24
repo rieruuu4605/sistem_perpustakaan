@@ -143,21 +143,32 @@ class AnggotaController extends Controller
 
     // Halaman Daftar Buku
     public function daftar_buku(Request $request)
-    {
-        $cari = $request->input('cari');
-        // Cari Buku Berdasarkan Kode Buku, Judul Buku, atau Penulis
-        $bukus = Buku::where(function ($query) use ($cari) {
-            $query->where('judul_buku', 'like', "%{$cari}%")
-                ->orWhere('penulis', 'like', "%{$cari}%")
-                ->orWhere('kode_buku', 'like', "%{$cari}%");
-        })->paginate(10)
-            // Paginasi
-            ->withQueryString();
+{
+    $cari = $request->input('cari');
+    $kategori = $request->input('kategori');
 
-        return view('Anggota.daftar-buku', [
-            "Bukus"   =>    $bukus
-        ]);
-    }
+    $bukus = Buku::where(function ($query) use ($cari) {
+        $query->where('judul_buku', 'like', "%{$cari}%")
+            ->orWhere('penulis', 'like', "%{$cari}%")
+            ->orWhere('kode_buku', 'like', "%{$cari}%");
+    })
+    ->when($kategori, function ($query) use ($kategori) {
+        $query->where('kategori', $kategori);
+    })
+    ->paginate(10)
+    ->withQueryString();
+
+    $kategoris = Buku::whereNotNull('kategori')
+        ->where('kategori', '!=', '')
+        ->distinct()
+        ->orderBy('kategori')
+        ->pluck('kategori');
+
+    return view('Anggota.daftar-buku', [
+        "Bukus"     => $bukus,
+        "kategoris" => $kategoris,
+    ]);
+}
 
     // Detail Buku
     public function detail_buku(Buku $buku)

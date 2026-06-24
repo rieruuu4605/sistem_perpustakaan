@@ -27,8 +27,20 @@
                         class="bg-white w-full pl-12 pr-4 py-3 rounded-md placeholder:text-gray-300 border border-gray-200"
                         value="{{ request('cari') }}">
                 </div>
+                <select name="kategori" onchange="this.form.submit()"
+                    class="bg-white px-4 py-3 rounded-md border border-gray-200 text-sm text-gray-600 cursor-pointer">
+                    <option value="">Semua Kategori</option>
+                    @foreach ($kategoris as $kat)
+                        <option value="{{ $kat }}" {{ request('kategori') == $kat ? 'selected' : '' }}>
+                            {{ $kat }}
+                        </option>
+                    @endforeach
+                </select>
                 <button type="submit"
                     class="bg-[#35094D] text-white px-6 py-3 rounded-md hover:bg-[#2a073a] transition duration-300 cursor-pointer">Cari</button>
+                @if(request('kategori') || request('cari'))
+                    <a href="/kelola-buku" class="text-sm text-gray-400 hover:text-[#35094D] underline whitespace-nowrap">Reset</a>
+                @endif
             </form>
         </div>
     </section>
@@ -42,7 +54,7 @@
                 <thead class="text-gray-500 font-medium">
     <tr>
         <th class="py-4 text-center">Cover</th>
-        <th class="py-4 text-center">Kode Buku</th>
+        <th class="py-4 text-center">ISBN</th>
         <th class="py-4 text-center">Judul Buku</th>
         <th class="py-4 text-center">Penulis</th>
         

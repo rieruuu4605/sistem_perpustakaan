@@ -52,20 +52,32 @@ class EbookController extends Controller
     }
 
     public function indexAnggota(Request $request)
-    {
-        $search = $request->input('cari');
+{
+    $search = $request->input('cari');
+    $kategori = $request->input('kategori');
 
-        $query = Ebook::query();
-        if ($search) {
-            $query->where('judul_ebook', 'LIKE', "%{$search}%")
-                  ->orWhere('penulis', 'LIKE', "%{$search}%")
-                  ->orWhere('kategori', 'LIKE', "%{$search}%");
-        }
-
-        $Ebooks = $query->latest()->paginate(6)->withQueryString();
-
-        return view('Anggota.ebook', compact('Ebooks'));
+    $query = Ebook::query();
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('judul_ebook', 'LIKE', "%{$search}%")
+              ->orWhere('penulis', 'LIKE', "%{$search}%")
+              ->orWhere('kategori', 'LIKE', "%{$search}%");
+        });
     }
+    if ($kategori) {
+        $query->where('kategori', $kategori);
+    }
+
+    $Ebooks = $query->latest()->paginate(6)->withQueryString();
+
+    $kategoris = Ebook::whereNotNull('kategori')
+        ->where('kategori', '!=', '')
+        ->distinct()
+        ->orderBy('kategori')
+        ->pluck('kategori');
+
+    return view('Anggota.ebook', compact('Ebooks', 'kategoris'));
+}
 
     public function indexLog()
     {

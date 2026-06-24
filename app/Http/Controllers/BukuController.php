@@ -11,19 +11,25 @@ class BukuController extends Controller
     public function index(Request $request)
     {
         $cari = $request->input('cari');
+        $kategori = $request->input('kategori');
 
-        // Cari Buku Berdasarkan Kode Buku atau Judul Buku
-        $bukus = Buku::where(function ($query) use ($cari) {
+        $Bukus = Buku::where(function ($query) use ($cari) {
             $query->where('kode_buku', 'like', "%{$cari}%")
                 ->orWhere('judul_buku', 'like', "%{$cari}%");
-        })->paginate(10)->withQueryString();
+        })
+        ->when($kategori, function ($query) use ($kategori) {
+            $query->where('kategori', $kategori);
+        })
+        ->paginate(10)->withQueryString();
 
+        $kategoris = Buku::whereNotNull('kategori')
+            ->where('kategori', '!=', '')
+            ->distinct()
+            ->orderBy('kategori')
+            ->pluck('kategori');
 
-        return view('kelola-buku.index', [
-            "Bukus"    =>     $bukus
-        ]);
+        return view('kelola-buku.index', compact('Bukus', 'kategoris'));
     }
-
     public function tambah_buku()
     {
         return view('kelola-buku.tambah-buku');
