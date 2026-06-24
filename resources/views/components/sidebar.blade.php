@@ -18,7 +18,7 @@
         <div class="flex flex-col overflow-hidden">
             <span class="text-[14px] font-medium text-[#35094D]">Anda Masuk Sebagai :</span>
             <span class="text-[10px] text-[#35094d90] capitalize truncate">
-                {{ Auth::user()->username }} - {{ Auth::user()->role }}#{{ Auth::user()->id }}
+            {{ Auth::user()->username }} - {{ ['kepala_perpus' => 'Admin', 'petugas' => 'Pustakawan', 'anggota' => 'Anggota'][Auth::user()->role] ?? Auth::user()->role }}#{{ Auth::user()->id }}
             </span>
         </div>
     </div>
@@ -309,10 +309,10 @@
                         <a href="/kelola-meja"
                             class="{{ request()->is('kelola-meja*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
                             <div class="w-6 h-6 flex items-center justify-center">
-                                <img src="{{ request()->is('kelola-meja*') ? asset('icons/svg/laporan-aktif.svg') : asset('icons/svg/laporan-inaktif.svg') }}"
-                                    class="w-5 h-5 object-contain" alt="">
+                                <img src="{{ request()->is('kelola-meja*') ? 'https://api.iconify.design/ri:layout-grid-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:layout-grid-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Manajemen Meja">
                             </div>
-                            <span>Kelola Meja</span>
+                            <span>Manajemen Meja</span>
                         </a>
                     </li>
                     <li>

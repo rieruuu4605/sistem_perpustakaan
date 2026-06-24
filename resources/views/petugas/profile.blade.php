@@ -20,7 +20,7 @@
 
                 <div class="flex flex-col">
                     <span class="text-[20px] text-[#35094D] font-medium capitalize">{{ Auth::user()->username }}</span>
-                    <span class="text-[#35094d90] text-[11px]">{{ Auth::user()->role }}#{{ Auth::user()->id }}</span>
+                    <span class="text-[#35094d90] text-[11px]">Pustakawan#{{ Auth::user()->id }}</span>
                     @error('profile_photo')
                         <div class="text-red-500 text-[14px]">{{ $message }}</div>
                     @enderror

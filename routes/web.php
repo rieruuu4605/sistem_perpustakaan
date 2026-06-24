@@ -79,6 +79,7 @@ Route::middleware(isPetugas::class)->group(function () {
     // Pengajuan & pengembalian & pembayaran
     Route::get('/pengajuan',[PetugasController::class, 'pengajuan']);
     Route::get('/pengembalian',[PetugasController::class, 'pengembalian']);
+    Route::get('/report-belum-kembali', [LaporanController::class, 'reportBelumKembali']);
     Route::get('/pembayaran',[PetugasController::class, 'pembayaran']);
     Route::post('/pembayaran/{id}',[PetugasController::class, 'pembayaranProses']);
     Route::post('/pengembalian/{id}',[PetugasController::class, 'pengembalianKonfirmasi']);
@@ -118,6 +119,7 @@ Route::middleware(isKepalaPerpus::class)->group(function () {
     // Kelola Daftar Transaksi
     Route::get('/daftar-transaksi', [KepalaPerpusController::class, 'daftar_transaksi']);
     // End Kelola Daftar Transaksi
+    Route::get('/report-belum-kembali', [LaporanController::class, 'reportBelumKembaliKepala']);
 
     // Tambahkan route ini
     Route::get('/daftar-pengunjung', [PengunjungController::class, 'index']);
