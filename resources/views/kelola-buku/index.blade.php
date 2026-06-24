@@ -59,6 +59,7 @@
         <th class="py-4 text-center">Penulis</th>
         
         <th class="py-4 text-center">Kategori</th>
+        <th class="py-4 text-center">Rak</th>
         <th class="py-4 text-center">Penerbit</th>
         
         <th class="py-4 text-center">Tahun Terbit</th>
@@ -80,6 +81,15 @@
             
             {{-- Tambahkan Pemanggilan Data Kategori dan Penerbit Di Sini --}}
             <td class="py-4 text-center">{{ $buku->kategori ?? '-' }}</td>
+            <td class="py-4 text-center">
+                @if($buku->rak)
+                    <span class="bg-[#35094D]/10 text-[#35094D] font-bold px-3 py-1 rounded-full text-sm">
+                        {{ $buku->rak }}
+                    </span>
+                @else
+                    <span class="text-gray-300">—</span>
+                @endif
+            </td>
             <td class="py-4 text-center">{{ $buku->penerbit ?? '-' }}</td>
             
             <td class="py-4 text-center">{{ $buku->tahun_terbit ?? 'N/A' }}</td>

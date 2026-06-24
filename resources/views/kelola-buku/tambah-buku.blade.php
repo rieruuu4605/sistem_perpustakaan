@@ -60,28 +60,60 @@
                 </div>
 
                 {{-- Input Kategori --}}
-<div class="mb-4">
-    <label for="kategori" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-    <input type="text" id="kategori" name="kategori" 
-        value="{{ old('kategori', $buku->kategori ?? '') }}" 
-        placeholder="Contoh: Fiksi, Edukasi..."
-        class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors @error('kategori') border-red-500 @enderror">
-    @error('kategori')
-        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-    @enderror
-</div>
+                <div class="mb-4">
+                    <label for="kategori" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                    <input type="text" id="kategori" name="kategori" 
+                        value="{{ old('kategori', $buku->kategori ?? '') }}" 
+                        placeholder="Contoh: Fiksi, Edukasi..."
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors @error('kategori') border-red-500 @enderror">
+                    @error('kategori')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-{{-- Input Penerbit --}}
-<div class="mb-4">
-    <label for="penerbit" class="block text-sm font-medium text-gray-700 mb-1">Penerbit</label>
-    <input type="text" id="penerbit" name="penerbit" 
-        value="{{ old('penerbit', $buku->penerbit ?? '') }}" 
-        placeholder="Contoh: Gramedia, Bentang Pustaka..."
-        class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors @error('penerbit') border-red-500 @enderror">
-    @error('penerbit')
-        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-    @enderror
-</div>
+                    {{-- Input Penerbit --}}
+                <div class="mb-4">
+                    <label for="penerbit" class="block text-sm font-medium text-gray-700 mb-1">Penerbit</label>
+                    <input type="text" id="penerbit" name="penerbit" 
+                        value="{{ old('penerbit', $buku->penerbit ?? '') }}" 
+                        placeholder="Contoh: Gramedia, Bentang Pustaka..."
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors @error('penerbit') border-red-500 @enderror">
+                    @error('penerbit')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Input Rak --}}
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Rak</label>
+                    <div class="flex gap-3">
+                        <div class="flex flex-col gap-1 w-1/2">
+                            <label class="text-xs text-gray-400">Baris (A–Z)</label>
+                            <select name="rak_baris"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors">
+                                <option value="">-- Pilih --</option>
+                                @foreach(range('A', 'Z') as $huruf)
+                                    <option value="{{ $huruf }}" {{ old('rak_baris') == $huruf ? 'selected' : '' }}>
+                                        Baris {{ $huruf }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1 w-1/2">
+                            <label class="text-xs text-gray-400">Tinggi (1–4)</label>
+                            <select name="rak_tinggi"
+                                class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors">
+                                <option value="">-- Pilih --</option>
+                                @foreach(range(1, 4) as $angka)
+                                    <option value="{{ $angka }}" {{ old('rak_tinggi') == $angka ? 'selected' : '' }}>
+                                        Tinggi {{ $angka }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">Contoh: Baris A + Tinggi 2 = Rak <strong>A2</strong></p>
+                </div>  
 
                 <div>
                     <label class="text-gray-600 text-sm font-semibold">Sinopsis*</label>

@@ -51,6 +51,12 @@
                             <p class="font-bold text-[#35094D]">{{ $buku->stok_buku ?? 0 }} Tersedia</p>
                         </div>
                     </div>
+                    <div class="bg-gray-50 p-4 rounded-2xl">
+                        <p class="text-xs text-gray-400 font-bold uppercase mb-1">Lokasi Rak</p>
+                        <p class="font-bold text-[#35094D]">
+                            {{ $buku->rak ? 'Rak ' . $buku->rak : 'Tidak diketahui' }}
+                        </p>
+                    </div>
 
                     {{-- Action Button --}}
                     <div class="mt-auto flex gap-4">
