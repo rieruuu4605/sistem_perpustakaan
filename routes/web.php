@@ -82,6 +82,8 @@ Route::middleware(isPetugas::class)->group(function () {
     Route::get('/pembayaran',[PetugasController::class, 'pembayaran']);
     Route::post('/pembayaran/{id}',[PetugasController::class, 'pembayaranProses']);
     Route::post('/pengembalian/{id}',[PetugasController::class, 'pengembalianKonfirmasi']);
+    Route::get('/kelola-meja', [PetugasController::class, 'kelolaMeja']);
+    Route::post('/update-meja/{id}', [PetugasController::class, 'updateMeja']);
 
     Route::post('/pengajuan/konfirmasi/{id}',[PetugasController::class, 'konfirmasi']);
     Route::post('/pengajuan/tolak/{id}',[PetugasController::class, 'tolak']);

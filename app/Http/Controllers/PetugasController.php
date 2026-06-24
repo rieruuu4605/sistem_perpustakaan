@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Meja;
 
 class PetugasController extends Controller
 {
@@ -114,6 +115,27 @@ class PetugasController extends Controller
         ]);
     }
 
+    public function kelolaMeja()
+    {
+        // Ambil semua meja, group per kode_meja
+        $mejas = Meja::orderBy('kode_meja')->orderBy('nomor_bangku')->get()
+            ->groupBy('kode_meja');
+
+        return view('petugas.kelola-meja', compact('mejas'));
+    }
+
+    public function updateMeja(Request $request, $id)
+    {
+        $meja = Meja::findOrFail($id);
+
+        $meja->update([
+            'status'              => $request->status,
+            'terakhir_diperbarui' => now(),
+            'petugas_id'          => Auth::id(),
+        ]);
+
+        return back()->with('success', 'Status bangku ' . $meja->kode_meja . '-' . $meja->nomor_bangku . ' berhasil diperbarui.');
+    }
     // Halaman Konfirmasi Pengembalian
     public function pengembalian(Request $request)
     {

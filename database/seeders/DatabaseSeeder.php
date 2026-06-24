@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BukuSeeder::class,
             EbookSeeder::class,
+            MejaSeeder::class,
         ]);
     }
 }

@@ -306,6 +306,16 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/kelola-meja"
+                            class="{{ request()->is('kelola-meja*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('kelola-meja*') ? asset('icons/svg/laporan-aktif.svg') : asset('icons/svg/laporan-inaktif.svg') }}"
+                                    class="w-5 h-5 object-contain" alt="">
+                            </div>
+                            <span>Kelola Meja</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/profile-petugas"
                             class="{{ request()->is('profile-petugas*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
                             <div class="w-6 h-6 flex items-center justify-center">
