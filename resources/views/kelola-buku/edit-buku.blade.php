@@ -66,10 +66,39 @@
                 {{-- Input Kategori --}}
                 <div class="mb-4">
                     <label for="kategori" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                    <input type="text" id="kategori" name="kategori" 
-                        value="{{ old('kategori', $buku->kategori ?? '') }}" 
-                        placeholder="Contoh: Fiksi, Edukasi..."
+                    <select id="kategori" name="kategori"
                         class="w-full border border-gray-300 rounded-md px-4 py-2 outline-none focus:border-[#35094D] transition-colors @error('kategori') border-red-500 @enderror">
+                        <option value="">-- Pilih Kategori --</option>
+                        @php
+                            $kategoriList = [
+                                'Buku Teks',
+                                'Novel',
+                                'Fiksi',
+                                'Non-Fiksi',
+                                'Ilmu Pengetahuan',
+                                'Teknologi & Komputer',
+                                'Ekonomi & Bisnis',
+                                'Hukum',
+                                'Kesehatan & Kedokteran',
+                                'Pendidikan',
+                                'Agama & Spiritualitas',
+                                'Sejarah',
+                                'Biografi',
+                                'Seni & Budaya',
+                                'Majalah',
+                                'Koran',
+                                'Komik & Manga',
+                                'Anak-anak',
+                                'Referensi & Kamus',
+                                'Lainnya',
+                            ];
+                        @endphp
+                        @foreach($kategoriList as $k)
+                            <option value="{{ $k }}" {{ old('kategori', $buku->kategori) == $k ? 'selected' : '' }}>
+                                {{ $k }}
+                            </option>
+                        @endforeach
+                    </select>
                     @error('kategori')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror

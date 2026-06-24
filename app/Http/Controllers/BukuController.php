@@ -43,7 +43,7 @@ class BukuController extends Controller
             "judul_buku"    => "required|max:50",
             "penulis"       => "required|max:50",
             "tahun_terbit"  => "required|date",
-            "kategori"      => "nullable|string|max:50",
+            "kategori"      => "nullable|in:Buku Teks,Novel,Fiksi,Non-Fiksi,Ilmu Pengetahuan,Teknologi & Komputer,Ekonomi & Bisnis,Hukum,Kesehatan & Kedokteran,Pendidikan,Agama & Spiritualitas,Sejarah,Biografi,Seni & Budaya,Majalah,Koran,Komik & Manga,Anak-anak,Referensi & Kamus,Lainnya",
             "penerbit"      => "nullable|string|max:50",
             "sinopsis"      => "nullable|min:20",
             "stok_buku"     => "required|integer|min:0|max:300",
@@ -63,6 +63,7 @@ class BukuController extends Controller
             "stok_buku.max"        => "Stok buku maksimal 300 Buku!",
             "cover_buku.mimes"     => "Cover buku harus berupa png,jpg,jpeg dan webp.",
             "cover_buku.max"       => "Cover buku maskimal berukuran 2mb.",
+            "kategori.in"          => "Kategori yang dipilih tidak valid.",
         ]);
 
         // Gabungkan rak_baris + rak_tinggi → kolom rak
@@ -95,7 +96,7 @@ class BukuController extends Controller
             "judul_buku"    => "required|max:50",
             "penulis"       => "required|max:50",
             "tahun_terbit"  => "required|date",
-            "kategori"      => "nullable|string|max:50",
+            "kategori"      => "nullable|in:Buku Teks,Novel,Fiksi,Non-Fiksi,Ilmu Pengetahuan,Teknologi & Komputer,Ekonomi & Bisnis,Hukum,Kesehatan & Kedokteran,Pendidikan,Agama & Spiritualitas,Sejarah,Biografi,Seni & Budaya,Majalah,Koran,Komik & Manga,Anak-anak,Referensi & Kamus,Lainnya",
             "penerbit"      => "nullable|string|max:50",
             "sinopsis"      => "nullable|min:20",
             "stok_buku"     => "required|integer|min:0|max:300",
@@ -115,6 +116,7 @@ class BukuController extends Controller
             "stok_buku.max"        => "Stok buku maksimal 300 Buku!",
             "cover_buku.mimes"     => "Cover buku harus berupa png,jpg,jpeg dan webp.",
             "cover_buku.max"       => "Cover buku maskimal berukuran 2mb.",
+            "kategori.in"          => "Kategori yang dipilih tidak valid.",
         ]);
 
         // Gabungkan rak_baris + rak_tinggi → kolom rak
