@@ -19,6 +19,9 @@ use App\Http\Middleware\isKepalaPerpus;
 use App\Http\Middleware\isPetugas;
 use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\EbookController;
+use App\Http\Controllers\SkripsiController;
+use App\Http\Controllers\CariSkripsiController;
+use App\Http\Controllers\PenerbitController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -182,3 +185,15 @@ Route::get('/edit-ebook/{id}', [EbookController::class, 'edit']);
 Route::put('/update-ebook/{id}', [EbookController::class, 'update']);
 
 Route::get('/log-ebook', [EbookController::class, 'indexLog']);
+
+Route::get('/koleksi-skripsi', [SkripsiController::class, 'index']);
+Route::post('/koleksi-skripsi/simpan', [SkripsiController::class, 'store']);
+
+Route::get('/cari-skripsi', [CariSkripsiController::class, 'index']);
+Route::get('/daftar-penerbit', [PenerbitController::class, 'index']);
+Route::post('/daftar-penerbit', [PenerbitController::class, 'store']);
+Route::put('/daftar-penerbit/{id}', [PenerbitController::class, 'update']);
+Route::delete('/daftar-penerbit/{id}', [PenerbitController::class, 'destroy']);
+Route::get('/daftar-penerbit/tambah-penerbit', [PenerbitController::class, 'index']);
+//route daftar penerbit petugas
+Route::get('/petugas/daftar-penerbit', [PenerbitController::class, 'indexPetugas']);

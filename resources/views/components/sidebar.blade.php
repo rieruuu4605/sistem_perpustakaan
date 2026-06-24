@@ -61,6 +61,16 @@
                             <span>E-Book</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/cari-skripsi"
+                            class="{{ request()->is('koleksi-skripsi*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('cari-skripsi*') ? 'https://api.iconify.design/ri:search-eye-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:search-eye-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Cari Skripsi">
+                            </div>
+                            <span>Cari Skripsi</span>
+                        </a>
+                    </li>
                 @endrole
 
                 {{-- Dashboard Petugas --}}
@@ -171,6 +181,16 @@
                             <span>Log E-Book</span>
                         </a>
                     </li>
+                    <li class="mt-2">
+                        <a href="/petugas/daftar-penerbit"
+                            class="{{ request()->is('petugas/daftar-penerbit*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('daftar-penerbit*') ? 'https://api.iconify.design/ri:building-4-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:building-4-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Daftar Penerbit">
+                            </div>
+                            <span>Daftar Penerbit</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         @endrole
@@ -260,6 +280,26 @@
                                     class="w-5 h-5 object-contain" alt="Input E-Book">
                             </div>
                             <span>Input E-Book</span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
+                        <a href="/koleksi-skripsi"
+                            class="{{ request()->is('koleksi-skripsi*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('koleksi-skripsi*') ? 'https://api.iconify.design/ri:graduation-cap-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:graduation-cap-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Koleksi Skripsi">
+                            </div>
+                            <span>Koleksi Skripsi</span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
+                        <a href="/daftar-penerbit/tambah-penerbit"
+                            class="{{ request()->is('daftar-penerbit/tambah-penerbit*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('daftar-penerbit/tambah-penerbit*') ? 'https://api.iconify.design/ri:building-4-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:building-4-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Tambah Daftar Penerbit">
+                            </div>
+                            <span>Daftar Penerbit</span>
                         </a>
                     </li>
                     <li>
