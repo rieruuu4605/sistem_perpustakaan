@@ -51,6 +51,16 @@
                             <span>Daftar Buku</span>
                         </a>
                     </li>
+                   <li>
+                        <a href="/e-book"
+                            class="{{ request()->is('e-book*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('e-book*') ? 'https://api.iconify.design/ri:download-cloud-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:download-cloud-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="E-Book">
+                            </div>
+                            <span>E-Book</span>
+                        </a>
+                    </li>
                 @endrole
 
                 {{-- Dashboard Petugas --}}
@@ -151,6 +161,16 @@
                             <span>Daftar Buku</span>
                         </a>
                     </li>
+                    <li class="mt-2">
+                        <a href="/log-ebook"
+                            class="{{ request()->is('log-ebook*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('log-ebook*') ? 'https://api.iconify.design/ri:history-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:history-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Log E-Book">
+                            </div>
+                            <span>Log E-Book</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         @endrole
@@ -206,7 +226,7 @@
         <div>
             <span class="text-[10px] font-medium text-[#35094d90] ">LAINNYA</span>
             <ul class="mt-2 space-y-4">
-                
+
                 {{-- MENU BUKU TAMU UNTUK ADMIN & PETUGAS --}}
                 @role('kepala_perpus', 'petugas')
                 <li>
@@ -230,6 +250,16 @@
                                     class="w-5 h-5 object-contain" alt="">
                             </div>
                             <span>Daftar Buku</span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
+                        <a href="/input-ebook"
+                            class="{{ request()->is('input-ebook*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('input-ebook*') ? 'https://api.iconify.design/ri:file-add-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:file-add-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Input E-Book">
+                            </div>
+                            <span>Input E-Book</span>
                         </a>
                     </li>
                     <li>

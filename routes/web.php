@@ -18,6 +18,7 @@ use App\Http\Middleware\isAnggota;
 use App\Http\Middleware\isKepalaPerpus;
 use App\Http\Middleware\isPetugas;
 use App\Http\Controllers\PengunjungController;
+use App\Http\Controllers\EbookController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -74,7 +75,7 @@ Route::middleware(isPetugas::class)->group(function () {
     Route::get('/dashboard-petugas', [PetugasController::class, 'Dashboard_petugas']);
     // End Dashboard Petugas
     // Tambahkan route ini
-    Route::get('/daftar-pengunjung', [PengunjungController::class, 'index']);   
+    Route::get('/daftar-pengunjung', [PengunjungController::class, 'index']);
     // Pengajuan & pengembalian & pembayaran
     Route::get('/pengajuan',[PetugasController::class, 'pengajuan']);
     Route::get('/pengembalian',[PetugasController::class, 'pengembalian']);
@@ -166,3 +167,12 @@ Route::middleware(is_pengguna_and_kepala_perpus::class)->group(function () {
 Route::view('/buku-tamu', 'pengunjung.buku_tamu')->name('buku.tamu');
 Route::get('/form-buku-tamu', [PengunjungController::class, 'showForm']);
 Route::post('/simpan-kunjungan', [PengunjungController::class, 'store']);
+
+Route::get('/input-ebook', [EbookController::class, 'indexAdmin']);
+Route::post('/simpan-ebook', [EbookController::class, 'store']);
+
+Route::get('/e-book', [EbookController::class, 'indexAnggota']);
+Route::get('/download-ebook/{id}', [EbookController::class, 'download'])->name('ebook.download');
+Route::delete('/hapus-ebook/{id}', [EbookController::class, 'destroy']);
+
+Route::get('/log-ebook', [EbookController::class, 'indexLog']);
