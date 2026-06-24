@@ -10,19 +10,24 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use function Symfony\Component\Clock\now;
-
 class PeminjamanController extends Controller
 {
     // Ajukan Pinjaman Buku
     public function ajukanBuku(Request $request)
     {
-
         // AMBIL DATA SETTING
         $config = Setting::first();
         $max_pinjam = $config->max_pinjam ?? 3;
         $max_pengajuan = $config->max_pengajuan ?? 2;
-        $tanggal_tempo = $config->tanggal_jatuh_tempo ?? Carbon::now();
+        $durasi = $config->durasi_pinjam ?? 7;
+
+        // Hitung tanggal jatuh tempo dari hari ini + durasi
+        $tanggal_tempo = Carbon::today()->addDays($durasi);
+
+        // Geser ke Senin jika jatuh di hari Minggu
+        if ($tanggal_tempo->dayOfWeek === Carbon::SUNDAY) {
+            $tanggal_tempo->addDay();
+        }
 
         // Ambil Data Buku Id
         $buku_id = $request->buku_id;
@@ -36,36 +41,35 @@ class PeminjamanController extends Controller
         // Ambil Data Anggota Id
         $anggota_id = Auth::user()->Anggota->id;
 
-
         // Waktu Saat Ini
         $SaatIni = Carbon::today();
 
         // Ambil Data Buku
         $buku = Buku::findOrFail($buku_id);
 
-        // Cek APakah Stok Buku Tersebut Tersedia?
+        // Cek Apakah Stok Buku Tersebut Tersedia?
         if ($buku->stok_buku === 0) {
             return back()->with('error', 'Mohon Maaf, Sepertinya stok buku ini kosong!');
         }
 
-        // Cek Apakah Pengguna ini sedang pinjam buku sebanyakk $max_pinjam buku?
+        // Cek Apakah Pengguna ini sedang pinjam buku sebanyak $max_pinjam buku?
         $pinjaman = Peminjaman::where('anggota_id', $anggota_id)->where('status', 'dipinjam')->count();
-        if ($pinjaman === $max_pinjam || $pinjaman >= $max_pinjam) {
+        if ($pinjaman >= $max_pinjam) {
             return back()->with('error', 'Jumlah Pinjaman kamu sudah Mencapai batas pinjaman, silahkan kembalikan buku pinjamanmu terlebih dahulu!');
         }
 
-        // batas pengajuan atau nunggu konfirmasi dulu,
+        // Batas pengajuan atau nunggu konfirmasi dulu
         $batas_pengajuan_pending = Peminjaman::where('anggota_id', $anggota_id)->where('status', 'menunggu')->count();
-        if ($batas_pengajuan_pending === $max_pengajuan || $batas_pengajuan_pending >= $max_pengajuan) {
+        if ($batas_pengajuan_pending >= $max_pengajuan) {
             return back()->with('error', 'kamu telah mencapai batas pengajuan buku!, silahkan tunggu konfirmasi buku yang kamu pinjam sebelumnya.');
         }
 
         // Buat Data Peminjaman
         Peminjaman::create([
-            "buku_id"         =>   $buku_id,
-            "anggota_id"      =>   $anggota_id,
-            "tanggal_pinjam"  =>   $SaatIni,
-            "tanggal_jatuh_tempo"  =>  $tanggal_tempo
+            "buku_id"             => $buku_id,
+            "anggota_id"          => $anggota_id,
+            "tanggal_pinjam"      => $SaatIni,
+            "tanggal_jatuh_tempo" => $tanggal_tempo
         ]);
 
         return back()->with('success', 'selamat, pengajuan buku berhasil silahkan menunggu konfirmasi..');
@@ -81,7 +85,7 @@ class PeminjamanController extends Controller
         // Waktu Jatuh Tempo
         $jatuhTempo = Carbon::parse($peminjaman->tanggal_jatuh_tempo)->startOfDay();
 
-        // hitung selisih hari
+        // Hitung selisih hari
         $terlambat = 0;
 
         // Jika Hari Ini Lebih Besar Dari Jatuh Tempo, maka hitung keterlambatan
@@ -91,10 +95,10 @@ class PeminjamanController extends Controller
 
         // Buat Data Pengembalian
         Pengembalian::create([
-            "peminjam_id"   =>   $peminjaman->id,
+            "peminjam_id"          => $peminjaman->id,
             "total_hari_terlambat" => $terlambat,
             "tanggal_kembalikan"   => Carbon::today(),
-            "status"        =>   "menunggu"
+            "status"               => "menunggu"
         ]);
 
         return back()->with('success', 'Ajukan Pengembalian Berhasil, silahkan menunggu konfirmasi..');

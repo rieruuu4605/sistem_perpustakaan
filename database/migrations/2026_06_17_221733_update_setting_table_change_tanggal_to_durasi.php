@@ -6,23 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void {
-    Schema::table('setting', function (Blueprint $table) {
-        $table->renameColumn('tanggal_jatuh_tempo', 'durasi_pinjam');
-        // Jika sebelumnya tipe datanya 'date', kamu mungkin perlu mengubahnya jadi 'integer'
-    });
-}
+    public function up(): void
+    {
+        Schema::table('setting', function (Blueprint $table) {
+            // Hapus kolom lama jika masih ada
+            if (Schema::hasColumn('setting', 'tanggal_jatuh_tempo')) {
+                $table->dropColumn('tanggal_jatuh_tempo');
+            }
 
-    /**
-     * Reverse the migrations.
-     */
+            // Tambah kolom baru jika belum ada
+            if (!Schema::hasColumn('setting', 'durasi_pinjam')) {
+                $table->integer('durasi_pinjam')->default(7)->after('denda_per_hari');
+            }
+        });
+    }
+
     public function down(): void
     {
-        Schema::table('durasi', function (Blueprint $table) {
-            //
+        Schema::table('setting', function (Blueprint $table) {
+            if (Schema::hasColumn('setting', 'durasi_pinjam')) {
+                $table->dropColumn('durasi_pinjam');
+            }
         });
     }
 };
