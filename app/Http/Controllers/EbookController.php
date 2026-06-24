@@ -14,14 +14,13 @@ class EbookController extends Controller
 {
     public function indexAdmin()
     {
-        $Ebooks = Ebook::latest()->get();
+        $Ebooks = Ebook::latest()->paginate(10);
 
         $TotalEbook = Ebook::count();
         $TotalDownloads = Ebook::sum('total_download');
 
         return view('Kepala_perpus.tambah-ebook', compact('Ebooks', 'TotalEbook', 'TotalDownloads'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -107,6 +106,54 @@ class EbookController extends Controller
         }
 
         return redirect()->back()->with('error', 'Berkas PDF tidak ditemukan di server.');
+    }
+
+    public function edit($id)
+    {
+        $ebook = Ebook::findOrFail($id);
+        return response()->json($ebook);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $ebook = Ebook::findOrFail($id);
+
+        $request->validate([
+            'judul_ebook' => 'required|string|max:255',
+            'penulis'     => 'required|string|max:255',
+            'kategori'    => 'required|string',
+            'tahun_terbit'=> 'nullable|integer',
+            'sinopsis'    => 'nullable|string',
+        ]);
+
+        $data = $request->only(['judul_ebook', 'penulis', 'kategori', 'tahun_terbit', 'sinopsis']);
+
+        // Ganti file PDF jika ada upload baru
+        if ($request->hasFile('file_pdf')) {
+            $request->validate([
+                'file_pdf' => 'mimes:pdf|max:51200',
+            ]);
+
+            // Hapus file lama
+            Storage::delete('public/ebooks/' . $ebook->file_pdf);
+
+            $file = $request->file('file_pdf');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/ebooks', $filename);
+            $data['file_pdf'] = $filename;
+
+            if (!$request->ukuran_file) {
+                $data['ukuran_file'] = round($file->getSize() / 1024 / 1024, 1) . ' MB';
+            }
+        }
+
+        if ($request->ukuran_file) {
+            $data['ukuran_file'] = $request->ukuran_file;
+        }
+
+        $ebook->update($data);
+
+        return redirect('/input-ebook')->with('success', 'E-Book berhasil diperbarui!');
     }
 
     public function destroy($id)

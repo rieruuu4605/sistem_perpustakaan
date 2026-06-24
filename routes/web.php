@@ -174,5 +174,7 @@ Route::post('/simpan-ebook', [EbookController::class, 'store']);
 Route::get('/e-book', [EbookController::class, 'indexAnggota']);
 Route::get('/download-ebook/{id}', [EbookController::class, 'download'])->name('ebook.download');
 Route::delete('/hapus-ebook/{id}', [EbookController::class, 'destroy']);
+Route::get('/edit-ebook/{id}', [EbookController::class, 'edit']);
+Route::put('/update-ebook/{id}', [EbookController::class, 'update']);
 
 Route::get('/log-ebook', [EbookController::class, 'indexLog']);

@@ -77,6 +77,12 @@
                             <td class="py-4 text-gray-400 font-medium">Admin</td>
                             <td class="py-4">
                                 <div class="flex justify-center items-center gap-3">
+                                    <button type="button"
+                                        onclick="bukaModalEdit({{ $ebook->id }}, '{{ addslashes($ebook->judul_ebook) }}', '{{ addslashes($ebook->penulis) }}', '{{ $ebook->tahun_terbit }}', '{{ addslashes($ebook->kategori) }}', '{{ $ebook->ukuran_file }}', '{{ addslashes($ebook->sinopsis ?? '') }}')"
+                                        class="text-blue-500 hover:text-blue-700 transition-colors flex items-center">
+                                        <img src="https://api.iconify.design/ri:edit-line.svg?color=%233b82f6" class="w-5 h-5" alt="Edit">
+                                    </button>
+                                    {{-- Tombol Hapus --}}
                                     <form action="/hapus-ebook/{{ $ebook->id }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus e-book ini?')">
                                         @csrf
                                         @method('DELETE')
@@ -96,6 +102,11 @@
                     @endforelse
                 </tbody>
             </table>
+                @if ($Ebooks->hasPages())
+                    <div class="mt-6 flex justify-end">
+                        {{ $Ebooks->links() }}
+                    </div>
+                @endif
         </div>
     </section>
 
@@ -166,6 +177,81 @@
         </div>
     </div>
 
+    <div id="modalEdit" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-8 shadow-2xl relative">
+            <h3 class="text-2xl font-bold text-[#35094D] mb-1">Edit E-Book</h3>
+            <p class="text-sm text-gray-400 mb-6">Perbarui informasi e-book yang sudah tersimpan</p>
+
+            <form id="formEdit" action="" method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
+                @csrf
+                @method('PUT')
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#35094D]">Judul E-Book *</label>
+                        <input type="text" name="judul_ebook" id="edit_judul" required
+                            class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#35094D]">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#35094D]">Pengarang *</label>
+                        <input type="text" name="penulis" id="edit_penulis" required
+                            class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#35094D]">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#35094D]">Tahun Terbit</label>
+                        <input type="number" name="tahun_terbit" id="edit_tahun"
+                            class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#35094D]">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#35094D]">Ukuran (MB)</label>
+                        <input type="text" name="ukuran_file" id="edit_ukuran"
+                            class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#35094D]">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#35094D]">Kategori</label>
+                        <select name="kategori" id="edit_kategori"
+                            class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#35094D]">
+                            <option value="Teknologi">Teknologi</option>
+                            <option value="Sains">Sains</option>
+                            <option value="Humaniora">Humaniora</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-[#35094D]">Ganti File PDF</label>
+                        <label class="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm text-gray-400 cursor-pointer hover:bg-gray-100">
+                            <img src="https://api.iconify.design/ri:cloud-upload-line.svg?color=%239ca3af" class="w-4 h-4" alt="">
+                            <span>Opsional — biarkan kosong</span>
+                            <input type="file" name="file_pdf" class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-semibold text-[#35094D]">Sinopsis</label>
+                    <textarea name="sinopsis" id="edit_sinopsis" rows="3"
+                        class="w-full bg-gray-50 border border-gray-100 rounded-xl p-4 text-sm focus:outline-none focus:border-[#35094D] resize-none"></textarea>
+                </div>
+
+                <div class="flex gap-4 mt-2">
+                    <button type="button" onclick="toggleModal('modalEdit')"
+                        class="flex-1 bg-white border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold text-sm hover:bg-gray-50">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="flex-1 bg-[#35094D] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#35094D]/90 shadow-sm">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function toggleModal(modalId) {
             const modal = document.getElementById(modalId);
@@ -176,6 +262,22 @@
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
             }
+        }
+
+        function bukaModalEdit(id, judul, penulis, tahun, kategori, ukuran, sinopsis) {
+            document.getElementById('edit_judul').value   = judul;
+            document.getElementById('edit_penulis').value = penulis;
+            document.getElementById('edit_tahun').value   = tahun;
+            document.getElementById('edit_ukuran').value  = ukuran;
+            document.getElementById('edit_sinopsis').value = sinopsis;
+
+            const selectKategori = document.getElementById('edit_kategori');
+            for (let opt of selectKategori.options) {
+                opt.selected = opt.value === kategori;
+            }
+
+            document.getElementById('formEdit').action = '/update-ebook/' + id;
+            toggleModal('modalEdit');
         }
     </script>
 
