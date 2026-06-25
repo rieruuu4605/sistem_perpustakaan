@@ -20,6 +20,17 @@ class PenerbitController extends Controller
         return view('petugas.daftar-penerbit', compact('penerbits'));
     }
 
+    public function create()
+    {
+        return view('Kepala_perpus.tambah-penerbit-form');
+    }
+
+    public function editPage($id)
+    {
+        $penerbit = Penerbit::findOrFail($id);
+        return view('Kepala_perpus.edit-penerbit', compact('penerbit'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([

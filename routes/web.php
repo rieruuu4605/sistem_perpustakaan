@@ -72,6 +72,15 @@ Route::middleware(isAnggota::class)->group(function () {
     // End Pemberitahuan Anggota
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/koleksi-skripsi', [SkripsiController::class, 'indexByRole']);
+    Route::post('/koleksi-skripsi/simpan', [SkripsiController::class, 'store']);
+    Route::get('/koleksi-skripsi/tambah', [SkripsiController::class, 'create']);
+    Route::put('/koleksi-skripsi/{id}', [SkripsiController::class, 'update']);
+    Route::delete('/koleksi-skripsi/{id}', [SkripsiController::class, 'destroy']);
+    Route::get('/koleksi-skripsi/{id}/edit', [SkripsiController::class, 'edit']);
+});
+
 // Petugas Routes
 Route::middleware(isPetugas::class)->group(function () {
     // Dashboard Petugas
@@ -79,6 +88,7 @@ Route::middleware(isPetugas::class)->group(function () {
     // End Dashboard Petugas
     // Tambahkan route ini
     Route::get('/daftar-pengunjung', [PengunjungController::class, 'index']);
+    Route::get('/petugas/daftar-tamu', [PengunjungController::class, 'daftarTamuPetugas']);
     // Pengajuan & pengembalian & pembayaran
     Route::get('/pengajuan',[PetugasController::class, 'pengajuan']);
     Route::get('/pengembalian',[PetugasController::class, 'pengembalian']);
@@ -88,7 +98,6 @@ Route::middleware(isPetugas::class)->group(function () {
     Route::post('/pengembalian/{id}',[PetugasController::class, 'pengembalianKonfirmasi']);
     Route::get('/kelola-meja', [PetugasController::class, 'kelolaMeja']);
     Route::post('/update-meja/{id}', [PetugasController::class, 'updateMeja']);
-
     Route::post('/pengajuan/konfirmasi/{id}',[PetugasController::class, 'konfirmasi']);
     Route::post('/pengajuan/tolak/{id}',[PetugasController::class, 'tolak']);
     // End Pengajuan & Pengembalian
@@ -142,6 +151,7 @@ Route::middleware(isKepalaPerpus::class)->group(function () {
     Route::post('/approve/laporan/{id}',[LaporanController::class, 'approveLaporan']);
     Route::post('/reject/laporan/{id}',[LaporanController::class, 'rejectLaporan']);
 
+
     // Kelola Pengguna
     Route::get('/daftar-pengguna', [KelolaPenggunaController::class, 'daftar_pengguna']);
     Route::delete('/daftar-pengguna/{user:id}', [KelolaPenggunaController::class, 'delete_pengguna']);
@@ -176,6 +186,7 @@ Route::get('/form-buku-tamu', [PengunjungController::class, 'showForm']);
 Route::post('/simpan-kunjungan', [PengunjungController::class, 'store']);
 
 Route::get('/input-ebook', [EbookController::class, 'indexAdmin']);
+Route::get('/tambah-ebook', [EbookController::class, 'create']);
 Route::post('/simpan-ebook', [EbookController::class, 'store']);
 
 Route::get('/e-book', [EbookController::class, 'indexAnggota']);
@@ -186,14 +197,13 @@ Route::put('/update-ebook/{id}', [EbookController::class, 'update']);
 
 Route::get('/log-ebook', [EbookController::class, 'indexLog']);
 
-Route::get('/koleksi-skripsi', [SkripsiController::class, 'index']);
-Route::post('/koleksi-skripsi/simpan', [SkripsiController::class, 'store']);
 
 Route::get('/cari-skripsi', [CariSkripsiController::class, 'index']);
 Route::get('/daftar-penerbit', [PenerbitController::class, 'index']);
 Route::post('/daftar-penerbit', [PenerbitController::class, 'store']);
+Route::get('/daftar-penerbit/tambah-penerbit', [PenerbitController::class, 'index']);
+Route::get('/petugas/daftar-penerbit', [PenerbitController::class, 'indexPetugas']);
+Route::get('/daftar-penerbit/tambah', [PenerbitController::class, 'create']);
 Route::put('/daftar-penerbit/{id}', [PenerbitController::class, 'update']);
 Route::delete('/daftar-penerbit/{id}', [PenerbitController::class, 'destroy']);
-Route::get('/daftar-penerbit/tambah-penerbit', [PenerbitController::class, 'index']);
-//route daftar penerbit petugas
-Route::get('/petugas/daftar-penerbit', [PenerbitController::class, 'indexPetugas']);
+Route::get('/daftar-penerbit/{id}/edit', [PenerbitController::class, 'editPage']);

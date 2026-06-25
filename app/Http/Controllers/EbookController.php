@@ -15,12 +15,17 @@ class EbookController extends Controller
     public function indexAdmin()
     {
         $Ebooks = Ebook::latest()->paginate(10);
-
         $TotalEbook = Ebook::count();
         $TotalDownloads = Ebook::sum('total_download');
 
         return view('Kepala_perpus.tambah-ebook', compact('Ebooks', 'TotalEbook', 'TotalDownloads'));
     }
+
+    public function create()
+    {
+        return view('Kepala_perpus.form-tambah-ebook');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -36,7 +41,6 @@ class EbookController extends Controller
             $file = $request->file('file_pdf');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('public/ebooks', $filename);
-
             $data['file_pdf'] = $filename;
 
             if (!$request->ukuran_file) {
@@ -47,45 +51,45 @@ class EbookController extends Controller
 
         Ebook::create($data);
 
-        return redirect()->back()->with('success', 'E-Book berhasil diunggah ke sistem!');
+        return redirect('/input-ebook')->with('success', 'E-Book berhasil diunggah ke sistem!');
     }
 
     public function indexAnggota(Request $request)
-{
-    $search = $request->input('cari');
-    $kategori = $request->input('kategori');
+    {
+        $search = $request->input('cari');
+        $kategori = $request->input('kategori');
 
-    $query = Ebook::query();
-    if ($search) {
-        $query->where(function ($q) use ($search) {
-            $q->where('judul_ebook', 'LIKE', "%{$search}%")
-              ->orWhere('penulis', 'LIKE', "%{$search}%")
-              ->orWhere('kategori', 'LIKE', "%{$search}%");
-        });
+        $query = Ebook::query();
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul_ebook', 'LIKE', "%{$search}%")
+                  ->orWhere('penulis', 'LIKE', "%{$search}%")
+                  ->orWhere('kategori', 'LIKE', "%{$search}%");
+            });
+        }
+        if ($kategori) {
+            $query->where('kategori', $kategori);
+        }
+
+        $Ebooks = $query->latest()->paginate(6)->withQueryString();
+
+        $kategoris = Ebook::whereNotNull('kategori')
+            ->where('kategori', '!=', '')
+            ->distinct()
+            ->orderBy('kategori')
+            ->pluck('kategori');
+
+        return view('Anggota.ebook', compact('Ebooks', 'kategoris'));
     }
-    if ($kategori) {
-        $query->where('kategori', $kategori);
-    }
-
-    $Ebooks = $query->latest()->paginate(6)->withQueryString();
-
-    $kategoris = Ebook::whereNotNull('kategori')
-        ->where('kategori', '!=', '')
-        ->distinct()
-        ->orderBy('kategori')
-        ->pluck('kategori');
-
-    return view('Anggota.ebook', compact('Ebooks', 'kategoris'));
-}
 
     public function indexLog()
     {
-    $LogEbooks = LogEbook::with(['user', 'ebook'])->latest()->paginate(10);
-    $TotalDownload = LogEbook::count();
-    $PenggunaUnik  = LogEbook::distinct('user_id')->count('user_id');
-    $HariIni       = LogEbook::whereDate('created_at', Carbon::today())->count();
+        $LogEbooks = LogEbook::with(['user', 'ebook'])->latest()->paginate(10);
+        $TotalDownload = LogEbook::count();
+        $PenggunaUnik  = LogEbook::distinct('user_id')->count('user_id');
+        $HariIni       = LogEbook::whereDate('created_at', Carbon::today())->count();
 
-    return view('petugas.log-ebook', compact('LogEbooks', 'TotalDownload', 'PenggunaUnik', 'HariIni'));
+        return view('petugas.log-ebook', compact('LogEbooks', 'TotalDownload', 'PenggunaUnik', 'HariIni'));
     }
 
     public function download($id)
@@ -94,9 +98,8 @@ class EbookController extends Controller
         $filePath = 'public/ebooks/' . $ebook->file_pdf;
 
         if (Storage::exists($filePath)) {
-
             LogEbook::create([
-                'user_id' => Auth::id(),
+                'user_id'  => Auth::id(),
                 'ebook_id' => $ebook->id
             ]);
 
@@ -111,7 +114,7 @@ class EbookController extends Controller
     public function edit($id)
     {
         $ebook = Ebook::findOrFail($id);
-        return response()->json($ebook);
+        return view('Kepala_perpus.form-edit-ebook', compact('ebook'));
     }
 
     public function update(Request $request, $id)
@@ -119,22 +122,18 @@ class EbookController extends Controller
         $ebook = Ebook::findOrFail($id);
 
         $request->validate([
-            'judul_ebook' => 'required|string|max:255',
-            'penulis'     => 'required|string|max:255',
-            'kategori'    => 'required|string',
-            'tahun_terbit'=> 'nullable|integer',
-            'sinopsis'    => 'nullable|string',
+            'judul_ebook'  => 'required|string|max:255',
+            'penulis'      => 'required|string|max:255',
+            'kategori'     => 'required|string',
+            'tahun_terbit' => 'nullable|integer',
+            'sinopsis'     => 'nullable|string',
         ]);
 
         $data = $request->only(['judul_ebook', 'penulis', 'kategori', 'tahun_terbit', 'sinopsis']);
 
-        // Ganti file PDF jika ada upload baru
         if ($request->hasFile('file_pdf')) {
-            $request->validate([
-                'file_pdf' => 'mimes:pdf|max:51200',
-            ]);
+            $request->validate(['file_pdf' => 'mimes:pdf|max:51200']);
 
-            // Hapus file lama
             Storage::delete('public/ebooks/' . $ebook->file_pdf);
 
             $file = $request->file('file_pdf');
@@ -158,11 +157,10 @@ class EbookController extends Controller
 
     public function destroy($id)
     {
-        $ebook = \App\Models\Ebook::findOrFail($id);
-
+        $ebook = Ebook::findOrFail($id);
 
         if ($ebook->file_pdf) {
-            \Illuminate\Support\Facades\Storage::delete('public/ebooks/' . $ebook->file_pdf);
+            Storage::delete('public/ebooks/' . $ebook->file_pdf);
         }
 
         $ebook->delete();

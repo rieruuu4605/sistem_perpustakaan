@@ -2,19 +2,16 @@
 @section('halaman', 'Koleksi Skripsi & Tugas Akhir')
 @section('main')
     <section class="mt-20 px-6">
-        <div class="mb-6 flex justify-between items-start">
-            <div>
-                <h2 class="text-2xl font-bold text-[#35094D]">Koleksi Skripsi & Tugas Akhir</h2>
-                <p class="text-gray-500 text-sm">Repositori skripsi dan artikel ilmiah mahasiswa</p>
-            </div>
-            <a href="/koleksi-skripsi/tambah" class="bg-[#35094D] hover:bg-[#250636] text-white px-6 py-3 rounded-md font-medium flex items-center gap-2 shadow-sm transition-colors">
-                <span>+ Input Skripsi</span>
-            </a>
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-[#35094D]">Koleksi Skripsi & Tugas Akhir</h2>
+            <p class="text-gray-500 text-sm">Repositori skripsi dan artikel ilmiah mahasiswa</p>
         </div>
 
         <form action="/koleksi-skripsi" method="GET" class="flex items-center gap-2 mb-8">
             <div class="relative w-full max-w-[450px]">
-                <input name="cari" type="text" placeholder="Cari judul, penulis, NPM..." class="bg-white w-full pl-11 pr-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#35094D]" value="{{ request('cari') }}">
+                <input name="cari" type="text" placeholder="Cari judul, penulis, NPM..."
+                    class="bg-white w-full pl-11 pr-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:border-[#35094D]"
+                    value="{{ request('cari') }}">
             </div>
             <button type="submit" class="bg-[#35094D] text-white px-6 py-3 rounded-md hover:bg-[#250636] transition-colors">Cari</button>
         </form>
@@ -25,7 +22,6 @@
                     <div class="w-12 h-12 bg-[#35094D] text-white flex items-center justify-center rounded-xl flex-shrink-0">
                         <img src="https://api.iconify.design/ri:graduation-cap-fill.svg?color=%23ffffff" class="w-6 h-6 object-contain" alt="Skripsi">
                     </div>
-
                     <div class="flex-1">
                         <h3 class="text-lg font-bold text-[#35094D] leading-snug">
                             {{ $skripsi->judul_skripsi }}
@@ -33,10 +29,7 @@
                         <p class="text-sm text-gray-500 mt-1">
                             {{ $skripsi->nama_penulis }} — NPM: {{ $skripsi->npm }} — {{ $skripsi->program_studi }} ({{ $skripsi->tahun_lulus }})
                         </p>
-                        <p class="text-gray-600 text-sm mt-2 line-clamp-2">
-                            {{ $skripsi->abstrak }}
-                        </p>
-
+                        <p class="text-gray-600 text-sm mt-2 line-clamp-2">{{ $skripsi->abstrak }}</p>
                         <div class="flex flex-wrap gap-2 mt-4">
                             @if($skripsi->nomor_rak && $skripsi->nomor_baris)
                                 <span class="bg-[#35094d10] text-[#35094D] text-xs px-3 py-1.5 rounded-md font-medium">
@@ -48,27 +41,7 @@
                                     CD Artikel
                                 </span>
                             @endif
-                            <span class="bg-purple-50 text-purple-600 text-xs px-3 py-1.5 rounded-md font-medium border border-purple-100">
-                                Sumbangan Mahasiswa
-                            </span>
                         </div>
-                    </div>
-                    <div class="flex flex-col gap-2 ml-4 flex-shrink-0">
-                        <a href="/koleksi-skripsi/{{ $skripsi->id }}/edit"
-                            class="flex items-center gap-1.5 text-xs text-blue-500 hover:text-blue-700 border border-blue-200 hover:border-blue-400 px-3 py-1.5 rounded-md transition-colors">
-                            <img src="https://api.iconify.design/ri:edit-line.svg?color=%233b82f6" class="w-3.5 h-3.5" alt="">
-                            Edit
-                        </a>
-                        <form action="/koleksi-skripsi/{{ $skripsi->id }}" method="POST"
-                            onsubmit="return confirm('Hapus skripsi ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="w-full flex items-center gap-1.5 text-xs text-red-500 hover:text-red-700 border border-red-200 hover:border-red-400 px-3 py-1.5 rounded-md transition-colors">
-                                <img src="https://api.iconify.design/ri:delete-bin-line.svg?color=%23ef4444" class="w-3.5 h-3.5" alt="">
-                                Hapus
-                            </button>
-                        </form>
                     </div>
                 </div>
             @empty
@@ -77,5 +50,7 @@
                 </div>
             @endforelse
         </div>
-    </section>  
+
+        {{ $skripsis->links() }}
+    </section>
 @endsection

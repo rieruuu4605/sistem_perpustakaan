@@ -23,6 +23,17 @@ class PengunjungController extends Controller
         return view('buku-tamu.daftar-pengunjung', compact('pengunjung', 'tanggal'));
     }
 
+    public function daftarTamuPetugas(Request $request)
+    {
+        $tanggal = $request->input('tanggal', Carbon::today()->format('Y-m-d'));
+
+        $pengunjung = BukuTamu::whereDate('created_at', $tanggal)
+                              ->latest()
+                              ->get();
+
+        return view('petugas.daftar-tamu', compact('pengunjung', 'tanggal'));
+    }
+
     public function showForm()
     {
         return view('pengunjung.formbuku_tamu');

@@ -172,6 +172,16 @@
                         </a>
                     </li>
                     <li class="mt-2">
+                        <a href="/koleksi-skripsi"
+                            class="{{ request()->is('koleksi-skripsi*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('koleksi-skripsi*') ? 'https://api.iconify.design/ri:graduation-cap-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:graduation-cap-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Skripsi">
+                            </div>
+                            <span>Koleksi Skripsi</span>
+                        </a>
+                    </li>
+                    <li class="mt-2">
                         <a href="/log-ebook"
                             class="{{ request()->is('log-ebook*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
                             <div class="w-6 h-6 flex items-center justify-center">
@@ -353,6 +363,16 @@
                                     class="w-5 h-5 object-contain" alt="Manajemen Meja">
                             </div>
                             <span>Manajemen Meja</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/petugas/daftar-tamu"
+                            class="{{ request()->is('petugas/daftar-tamu*') ? 'text-[#35094D] font-semibold' : 'text-[#35094d90]' }} flex items-center gap-2 text-[16px]">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <img src="{{ request()->is('petugas/daftar-tamu*') ? 'https://api.iconify.design/ri:contacts-book-2-fill.svg?color=%2335094D' : 'https://api.iconify.design/ri:contacts-book-2-line.svg?color=%2335094d&alpha=0.56' }}"
+                                    class="w-5 h-5 object-contain" alt="Daftar Tamu">
+                            </div>
+                            <span>Daftar Tamu</span>
                         </a>
                     </li>
                     <li>
